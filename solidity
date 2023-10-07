@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MusicRegistry {
+    struct Song {
+        string title;
+        string artist;
+        address owner;
+    }
+
+    mapping(uint256 => Song) public songs;
+    uint256 public songCount;
+
+    event SongRegistered(uint256 indexed id, string title, string artist, address owner);
+
+    function registerSong(string memory _title, string memory _artist) public {
+        songCount++;
+        songs[songCount] = Song(_title, _artist, msg.sender);
+        emit SongRegistered(songCount, _title, _artist, msg.sender);
+    }
+}
